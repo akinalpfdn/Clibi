@@ -1,32 +1,18 @@
-//
-//  ClibiApp.swift
-//  Clibi
-//
-//  Created by Akinalp Fidan on 11.03.2026.
-//
-
 import SwiftUI
-import SwiftData
 
 @main
 struct ClibiApp: App {
-    var sharedModelContainer: ModelContainer = {
-        let schema = Schema([
-            Item.self,
-        ])
-        let modelConfiguration = ModelConfiguration(schema: schema, isStoredInMemoryOnly: false)
-
-        do {
-            return try ModelContainer(for: schema, configurations: [modelConfiguration])
-        } catch {
-            fatalError("Could not create ModelContainer: \(error)")
-        }
-    }()
+    @NSApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
+    @Environment(\.openSettings) private var openSettings
 
     var body: some Scene {
-        WindowGroup {
-            ContentView()
+        Settings {
+            SettingsView(store: appDelegate.store) { config in
+                appDelegate.updateHotkey(config)
+            }
         }
-        .modelContainer(sharedModelContainer)
+        .onChange(of: appDelegate.settingsRequestCount) {
+            openSettings()
+        }
     }
 }
