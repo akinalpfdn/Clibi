@@ -70,13 +70,20 @@ final class ClipboardStore {
         save()
     }
 
+    func togglePin(_ item: ClipboardItem) {
+        guard let idx = items.firstIndex(where: { $0.id == item.id }) else { return }
+        items[idx].isPinned.toggle()
+        save()
+    }
+
     func clear() {
-        for item in items {
+        // Pinned items survive a clear; only their image files are kept on disk.
+        for item in items where !item.isPinned {
             if let filename = item.imageFilename {
                 deleteImageFile(named: filename)
             }
         }
-        items.removeAll()
+        items.removeAll { !$0.isPinned }
         save()
     }
 
@@ -89,11 +96,16 @@ final class ClipboardStore {
     // MARK: - Private helpers
 
     private func trimAndSave() {
-        while items.count > maxItems {
-            let dropped = items.removeLast()
+        // Only non-pinned items count against the limit; pinned items are never evicted.
+        var nonPinnedCount = items.filter { !$0.isPinned }.count
+        while nonPinnedCount > maxItems {
+            // Remove the oldest (last) non-pinned item.
+            guard let idx = items.indices.reversed().first(where: { !items[$0].isPinned }) else { break }
+            let dropped = items.remove(at: idx)
             if let filename = dropped.imageFilename {
                 deleteImageFile(named: filename)
             }
+            nonPinnedCount -= 1
         }
         save()
     }

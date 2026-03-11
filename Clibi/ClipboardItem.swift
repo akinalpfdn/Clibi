@@ -3,6 +3,7 @@ import Foundation
 struct ClipboardItem: Codable, Identifiable {
     let id: UUID
     let kind: Kind
+    var isPinned: Bool = false
 
     enum Kind: Codable {
         case text(String)

@@ -1,0 +1,69 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" width="1024" height="1024">
+  <defs>
+    <linearGradient id="bgGrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#141414"/>
+      <stop offset="100%" stop-color="#0A0A0A"/>
+    </linearGradient>
+    <!-- Subtle blue glow for the active/recent item -->
+    <radialGradient id="blueGlow" cx="0.5" cy="0.3" r="0.6">
+      <stop offset="0%" stop-color="#5B9CF5" stop-opacity="0.1"/>
+      <stop offset="100%" stop-color="#5B9CF5" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+
+  <!-- macOS squircle background -->
+  <rect x="32" y="32" width="960" height="960" rx="192" ry="192" fill="url(#bgGrad)"/>
+  <rect x="32" y="32" width="960" height="960" rx="192" ry="192" fill="none" stroke="#FFFFFF" stroke-width="2" opacity="0.06"/>
+
+  <!-- ===== CLIPBOARD BOARD ===== -->
+  <!-- Board body -->
+  <rect x="252" y="200" width="520" height="640" rx="28" ry="28" fill="#FFFFFF" opacity="0.03"/>
+  <rect x="252" y="200" width="520" height="640" rx="28" ry="28" fill="none" stroke="#E0E0E0" stroke-width="6"/>
+
+  <!-- Clip at top (the metal clip of clipboard) -->
+  <rect x="402" y="160" width="220" height="80" rx="16" ry="16" fill="none" stroke="#E0E0E0" stroke-width="6"/>
+  <rect x="402" y="200" width="220" height="20" fill="#0D0D0D"/>
+  <!-- Clip inner hole -->
+  <rect x="462" y="174" width="100" height="30" rx="10" ry="10" fill="#0D0D0D" stroke="#E0E0E0" stroke-width="4" opacity="0.4"/>
+
+  <!-- ===== CLIPBOARD CONTENT - stacked copy items ===== -->
+  
+  <!-- Item 1 - Most recent, blue accent -->
+  <rect x="296" y="280" width="432" height="72" rx="14" ry="14" fill="#5B9CF5" opacity="0.08"/>
+  <rect x="296" y="280" width="432" height="72" rx="14" ry="14" fill="none" stroke="#5B9CF5" stroke-width="3" opacity="0.5"/>
+  <!-- Text lines -->
+  <line x1="328" y1="308" x2="560" y2="308" stroke="#E0E0E0" stroke-width="6" stroke-linecap="round" opacity="0.6"/>
+  <line x1="328" y1="332" x2="480" y2="332" stroke="#E0E0E0" stroke-width="5" stroke-linecap="round" opacity="0.3"/>
+  <!-- Copy icon indicator -->
+  <rect x="668" y="300" width="28" height="32" rx="5" fill="none" stroke="#5B9CF5" stroke-width="2.5" opacity="0.5"/>
+  <rect x="676" y="308" width="28" height="32" rx="5" fill="none" stroke="#5B9CF5" stroke-width="2.5" opacity="0.3"/>
+
+  <!-- Item 2 -->
+  <rect x="296" y="372" width="432" height="72" rx="14" ry="14" fill="none" stroke="#E0E0E0" stroke-width="3" opacity="0.2"/>
+  <line x1="328" y1="400" x2="520" y2="400" stroke="#E0E0E0" stroke-width="6" stroke-linecap="round" opacity="0.35"/>
+  <line x1="328" y1="424" x2="440" y2="424" stroke="#E0E0E0" stroke-width="5" stroke-linecap="round" opacity="0.18"/>
+
+  <!-- Item 3 -->
+  <rect x="296" y="464" width="432" height="72" rx="14" ry="14" fill="none" stroke="#E0E0E0" stroke-width="3" opacity="0.15"/>
+  <line x1="328" y1="492" x2="580" y2="492" stroke="#E0E0E0" stroke-width="6" stroke-linecap="round" opacity="0.25"/>
+  <line x1="328" y1="516" x2="460" y2="516" stroke="#E0E0E0" stroke-width="5" stroke-linecap="round" opacity="0.12"/>
+
+  <!-- Item 4 (fading) -->
+  <rect x="296" y="556" width="432" height="72" rx="14" ry="14" fill="none" stroke="#E0E0E0" stroke-width="3" opacity="0.08"/>
+  <line x1="328" y1="584" x2="500" y2="584" stroke="#E0E0E0" stroke-width="6" stroke-linecap="round" opacity="0.12"/>
+  <line x1="328" y1="608" x2="420" y2="608" stroke="#E0E0E0" stroke-width="5" stroke-linecap="round" opacity="0.06"/>
+
+  <!-- Item 5 (barely visible) -->
+  <rect x="296" y="648" width="432" height="72" rx="14" ry="14" fill="none" stroke="#E0E0E0" stroke-width="2" opacity="0.04"/>
+  <line x1="328" y1="676" x2="540" y2="676" stroke="#E0E0E0" stroke-width="6" stroke-linecap="round" opacity="0.06"/>
+
+  <!-- Fade-out gradient at bottom of list -->
+  <rect x="296" y="740" width="432" height="80" rx="0" fill="url(#bgGrad)" opacity="0.8"/>
+
+  <!-- ===== SCROLL INDICATOR ===== -->
+  <rect x="744" y="290" width="5" height="120" rx="2.5" ry="2.5" fill="#5B9CF5" opacity="0.3"/>
+  <rect x="744" y="420" width="5" height="340" rx="2.5" ry="2.5" fill="#E0E0E0" opacity="0.08"/>
+
+  <!-- Blue glow overlay -->
+  <rect x="252" y="200" width="520" height="640" rx="28" ry="28" fill="url(#blueGlow)"/>
+</svg>

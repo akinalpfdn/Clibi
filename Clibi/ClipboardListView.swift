@@ -62,7 +62,8 @@ struct ClipboardListView: View {
                             ClipboardRowView(
                                 item: item,
                                 imagesDir: store.imagesDir,
-                                isHovered: hoveredItemID == item.id
+                                isHovered: hoveredItemID == item.id,
+                                onTogglePin: { store.togglePin(item) }
                             )
                             .onTapGesture { onSelect(item) }
                             .onHover { hoveredItemID = $0 ? item.id : nil }
@@ -70,6 +71,10 @@ struct ClipboardListView: View {
                                 Button("Paste") { onSelect(item) }
                                 Button("Copy Only") {
                                     PasteService.place(item: item, imagesDir: store.imagesDir)
+                                }
+                                Divider()
+                                Button(item.isPinned ? "Unpin" : "Pin") {
+                                    store.togglePin(item)
                                 }
                                 Divider()
                                 Button("Delete", role: .destructive) {
@@ -137,6 +142,7 @@ struct ClipboardRowView: View {
     let item: ClipboardItem
     let imagesDir: URL
     let isHovered: Bool
+    let onTogglePin: () -> Void
 
     var body: some View {
         Group {
@@ -149,6 +155,17 @@ struct ClipboardRowView: View {
         .frame(maxWidth: .infinity, alignment: .leading)
         .padding(.horizontal, 8)
         .padding(.vertical, 6)
+        .overlay(alignment: .topTrailing) {
+            if isHovered || item.isPinned {
+                Button(action: onTogglePin) {
+                    Image(systemName: item.isPinned ? "pin.fill" : "pin")
+                        .font(.caption2)
+                        .foregroundStyle(item.isPinned ? Color.accentColor : Color.secondary)
+                }
+                .buttonStyle(.plain)
+                .padding(4)
+            }
+        }
         .background(
             isHovered ? Color.accentColor.opacity(0.15) : Color.clear,
             in: RoundedRectangle(cornerRadius: 6)
