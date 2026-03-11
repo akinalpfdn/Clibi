@@ -47,7 +47,7 @@
 
 1. Clone the repository:
    ```bash
-   git clone https://github.com/yourusername/Clibi.git
+   git clone https://github.com/akinalpfdn/Clibi.git
    ```
 2. Open `Clibi.xcodeproj` in Xcode
 3. Build and run (`⌘R`)

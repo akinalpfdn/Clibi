@@ -17,6 +17,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
 
         setupClipboardMonitor()
         setupHotkey()
+        UpdateChecker.checkForUpdates()
     }
 
     // MARK: - Clipboard monitor
