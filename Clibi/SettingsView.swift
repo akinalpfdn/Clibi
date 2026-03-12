@@ -1,4 +1,5 @@
 import SwiftUI
+import ServiceManagement
 
 struct SettingsView: View {
     var store: ClipboardStore
@@ -6,9 +7,31 @@ struct SettingsView: View {
 
     @State private var maxItems: Double = 100
     @State private var hotkeyConfig: HotkeyConfig = .default
+    @State private var launchAtStartup: Bool = false
+    @State private var showLaunchToast: Bool = true
 
     var body: some View {
         Form {
+            Section("General") {
+                Toggle("Launch at startup", isOn: $launchAtStartup)
+                    .onChange(of: launchAtStartup) { _, newValue in
+                        do {
+                            if newValue {
+                                try SMAppService.mainApp.register()
+                            } else {
+                                try SMAppService.mainApp.unregister()
+                            }
+                        } catch {
+                            launchAtStartup = !newValue
+                        }
+                    }
+
+                Toggle("Show notification on launch", isOn: $showLaunchToast)
+                    .onChange(of: showLaunchToast) { _, newValue in
+                        UserDefaults.standard.set(newValue, forKey: "showLaunchToast")
+                    }
+            }
+
             Section("History") {
                 VStack(alignment: .leading, spacing: 8) {
                     Text("Maximum items: \(Int(maxItems))")
@@ -56,10 +79,12 @@ struct SettingsView: View {
             }
         }
         .formStyle(.grouped)
-        .frame(width: 400, height: 360)
+        .frame(width: 400, height: 460)
         .onAppear {
             maxItems = Double(store.maxItems)
             hotkeyConfig = HotkeyConfig.current
+            launchAtStartup = SMAppService.mainApp.status == .enabled
+            showLaunchToast = UserDefaults.standard.object(forKey: "showLaunchToast") as? Bool ?? true
         }
     }
 }

@@ -10,6 +10,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
     private let monitor = ClipboardMonitor()
     private let hotkeyManager = HotkeyManager()
     private var panel: PopupPanel?
+    private var toastPanel: LaunchToastPanel?
 
     func applicationDidFinishLaunching(_ notification: Notification) {
         // Run as a background agent — no Dock icon, no menu bar icon
@@ -18,6 +19,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         setupClipboardMonitor()
         setupHotkey()
         UpdateChecker.checkForUpdates()
+        showLaunchToastIfNeeded()
     }
 
     // MARK: - Clipboard monitor
@@ -85,5 +87,18 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         panel = nil
         NSApp.activate()
         settingsRequestCount += 1
+    }
+
+    // MARK: - Launch toast
+
+    private func showLaunchToastIfNeeded() {
+        guard UserDefaults.standard.object(forKey: "showLaunchToast") as? Bool ?? true else { return }
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) { [weak self] in
+            let toast = LaunchToastPanel(hotkey: HotkeyConfig.current.displayString)
+            self?.toastPanel = toast
+            toast.showAndAutoDismiss { [weak self] in
+                self?.toastPanel = nil
+            }
+        }
     }
 }
